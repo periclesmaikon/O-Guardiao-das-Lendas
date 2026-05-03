@@ -34,9 +34,18 @@ public class Player : MonoBehaviour {
         float forwardInput = Input.GetAxisRaw("Vertical");
         float strafeInput = Input.GetAxisRaw("Horizontal");
 
-        forward = forwardInput * forwardSpeed * transform.forward;
-        strafe = strafeInput * strafeSpeed * transform.right;
+        // vetor de direção
+        Vector3 moveDirection = new Vector3(strafeInput, 0, forwardInput);
 
+        // normaliza a velocidade caso esteja na diagonal (soma valores vertical e horizontal)
+        if (moveDirection.magnitude > 1) {
+            moveDirection.Normalize();
+        }
+
+        // transforma essa direção para o espaço do mundo (baseado na rotação do player)
+        Vector3 horizontalVelocity = transform.TransformDirection(moveDirection) * forwardSpeed;
+
+        //gravidade e pulo
         vertical += gravity * Time.deltaTime * Vector3.up;
 
         if(controller.isGrounded) {
@@ -51,10 +60,9 @@ public class Player : MonoBehaviour {
             vertical = Vector3.zero;
         }
 
-        Vector3 finalVelocity = forward + strafe + vertical;
+        Vector3 finalVelocity = horizontalVelocity + vertical;
         controller.Move(finalVelocity * Time.deltaTime);
 
-        // --- LÓGICA DE ÁUDIO ---
         ControlarPassos(forwardInput, strafeInput);
     }
 
