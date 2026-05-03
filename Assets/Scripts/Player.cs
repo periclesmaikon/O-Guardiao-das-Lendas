@@ -12,7 +12,7 @@ public class Player : MonoBehaviour {
     Vector3 vertical;
 
     float forwardSpeed = 2.5f;
-    float strafeSpeed = 2.5f;
+    //float strafeSpeed = 2.5f;
 
     float gravity;
     float jumpSpeed;

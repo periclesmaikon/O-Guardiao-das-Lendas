@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI; // Necessário para acessar a UI
+using TMPro;
 
 public class PlayerInteraction : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class PlayerInteraction : MonoBehaviour
     public float animationSpeed = 10f; // Velocidade de transição do tamanho
 
     private IInteractable currentTarget;
+    public TextMeshProUGUI promptTextUI;
 
     void Update()
     {
@@ -42,12 +44,22 @@ public class PlayerInteraction : MonoBehaviour
             if (interactable != null)
             {
                 currentTarget = interactable;
+                if (promptTextUI != null)
+                {
+                    promptTextUI.text = currentTarget.GetInteractPrompt();
+                    promptTextUI.gameObject.SetActive(true); // Garante que está visível
+                }
                 return; // Achou o alvo, sai da função
             }
         }
         
         // Se não bateu em nada ou o objeto não tem script de interação, zera o alvo
         currentTarget = null;
+        if (promptTextUI != null)
+        {
+            promptTextUI.text = "";
+            promptTextUI.gameObject.SetActive(false);
+        }
     }
 
     private void AnimateCrosshair()

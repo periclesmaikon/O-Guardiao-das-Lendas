@@ -7,6 +7,7 @@ public class DogInteraction : MonoBehaviour, IInteractable
     [Header("Configurações de Animação")]
     private Animator dogAnimator; 
     public string animationTriggerName = "Carinho"; 
+    public string promptMessage = "Fazer carinho";
 
     [Header("Configurações de Áudio")]
     public AudioClip barkSound;
@@ -44,6 +45,11 @@ public class DogInteraction : MonoBehaviour, IInteractable
         {
             Debug.LogWarning("Faltando o AudioClip de latido ou o componente AudioSource!");
         }
+    }
+
+    public string GetInteractPrompt()
+    {
+        return promptMessage;
     }
 
     // --- 3. A Corrotina do Tempo de Espera ---
