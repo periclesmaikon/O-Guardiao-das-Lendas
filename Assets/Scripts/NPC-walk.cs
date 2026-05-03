@@ -7,21 +7,24 @@ public class PersonWalk : MonoBehaviour
     public GameObject fim;
 
     [Header("Configurações de Movimento")]
-    public float velocidade = 0.7f; // Velocidade que a pessoa vai andar
+    public float velocidade = 0.7f;
 
-    // Variável para guardar para onde a pessoa está indo no momento
+    [Header("Configurações de Áudio")]
+    private AudioSource audioSource;
+
     private Transform alvoAtual;
 
     void Start()
     {
-        // Prevenção de erros: garante que os objetos foram colocados no Inspector
+        audioSource = GetComponent<AudioSource>();
+
         if (inicio != null && fim != null)
         {
-            // Opcional: Garante que a pessoa comece exatamente na posição do "inicio"
             transform.position = inicio.transform.position;
-            
-            // Define que o primeiro destino é o "fim"
             alvoAtual = fim.transform;
+            
+            // Inicia o som se houver um alvo
+            PlayFootsteps();
         }
         else
         {
@@ -31,26 +34,44 @@ public class PersonWalk : MonoBehaviour
 
     void Update()
     {
-        // Se não tiver alvo, não faz nada
-        if (alvoAtual == null) return;
+        if (alvoAtual == null) 
+        {
+            StopFootsteps();
+            return;
+        }
 
-        // 1. Move a pessoa na direção do alvo atual
+        // Movimentação
         transform.position = Vector3.MoveTowards(transform.position, alvoAtual.position, velocidade * Time.deltaTime);
         transform.LookAt(alvoAtual);
 
-        // 2. Verifica se a pessoa chegou ao destino
-        // Usamos uma distância pequena (0.1f) em vez de "==" porque cálculos de física e posição nem sempre cravam no zero exato
+        // Verificação de chegada
         if (Vector3.Distance(transform.position, alvoAtual.position) < 0.1f)
         {
-            // 3. Inverte o alvo: se chegou no fim, volta pro início. Se chegou no início, vai pro fim.
             if (alvoAtual == fim.transform)
-            {
                 alvoAtual = inicio.transform;
-            }
             else
-            {
                 alvoAtual = fim.transform;
-            }
+        }
+
+        if (!audioSource.isPlaying)
+        {
+            PlayFootsteps();
+        }
+    }
+
+    void PlayFootsteps()
+    {
+        if (audioSource != null && !audioSource.isPlaying)
+        {
+            audioSource.Play();
+        }
+    }
+
+    void StopFootsteps()
+    {
+        if (audioSource != null && audioSource.isPlaying)
+        {
+            audioSource.Stop();
         }
     }
 }

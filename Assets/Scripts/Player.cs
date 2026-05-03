@@ -4,6 +4,9 @@ public class Player : MonoBehaviour {
 
     CharacterController controller;
 
+    [Header("Configurações de Áudio")]
+    private AudioSource footstepsAudio;
+
     Vector3 forward;
     Vector3 strafe;
     Vector3 vertical;
@@ -17,27 +20,20 @@ public class Player : MonoBehaviour {
     float timeToMaxHeight = 0.3f;
 
     void Start() {
-
         controller = GetComponent<CharacterController>();
+        footstepsAudio = GetComponent<AudioSource>(); // Inicializa o áudio
 
         gravity = (-2 * maxJumpHeight) / (timeToMaxHeight * timeToMaxHeight);
         jumpSpeed = (2 * maxJumpHeight) / timeToMaxHeight;
 
-        // Trava o cursor no centro da tela
         Cursor.lockState = CursorLockMode.Locked;
-        
-        // Deixa o cursor invisível
         Cursor.visible = false;
-
     }
 
     void Update() {
-
-
         float forwardInput = Input.GetAxisRaw("Vertical");
         float strafeInput = Input.GetAxisRaw("Horizontal");
 
-        // force = input * speed * direction
         forward = forwardInput * forwardSpeed * transform.forward;
         strafe = strafeInput * strafeSpeed * transform.right;
 
@@ -56,10 +52,24 @@ public class Player : MonoBehaviour {
         }
 
         Vector3 finalVelocity = forward + strafe + vertical;
-
         controller.Move(finalVelocity * Time.deltaTime);
 
-
+        // --- LÓGICA DE ÁUDIO ---
+        ControlarPassos(forwardInput, strafeInput);
     }
 
+    void ControlarPassos(float fInput, float sInput) {
+        // Verifica se há input de movimento E se o jogador está no chão
+        bool estaMovendo = (fInput != 0 || sInput != 0) && controller.isGrounded;
+
+        if (estaMovendo) {
+            if (!footstepsAudio.isPlaying) {
+                footstepsAudio.Play();
+            }
+        } else {
+            if (footstepsAudio.isPlaying) {
+                footstepsAudio.Stop();
+            }
+        }
+    }
 }
