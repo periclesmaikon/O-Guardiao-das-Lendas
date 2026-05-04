@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEngine.Rendering;
 
 public class BookSystem : MonoBehaviour
 {
@@ -9,22 +10,39 @@ public class BookSystem : MonoBehaviour
     public Image displayImage;
     
     [Header("Conteúdo")]
-    public List<Sprite> bookPages; // Arraste a capa (index 0) e as páginas para cá
+    public List<Sprite> bookPages; 
     
+    [Header("Evento do Mapa (Queda)")]
+    public GameObject mapPrefab;     
+    public Transform dropPoint;      
+    private bool hasDroppedMap = false; 
+
+    [Header("Integração de Sistemas")]
+    public MapSystem mapSystem; // Referência ao script do mapa
+
+     [Header("Efeito de Desfoque (Volume Dedicado)")]
+    public Volume uiBlurVolume;
+    
+    // Agora a variável pode ser lida por outros scripts
+    public bool isBookOpen { get; private set; } = false; 
     private int currentPageIndex = 0;
-    private bool isBookOpen = false;
 
     void Start()
     {
-        bookPanel.SetActive(false);
+        if (bookPanel != null) bookPanel.SetActive(false);
+        if (uiBlurVolume != null) uiBlurVolume.weight = 0f;
     }
 
     void Update()
     {
-        // Vamos ver se o Update está rodando mesmo
         if (Input.GetKeyDown(KeyCode.L))
         {
-            Debug.Log("A tecla L foi detectada!"); // Vai aparecer no Console
+            // Se o mapa estiver aberto, NÃO deixa abrir o livro
+            if (!isBookOpen && mapSystem != null && mapSystem.isMapOpen)
+            {
+                return; // Interrompe o código aqui
+            }
+            
             ToggleBook();
         }
     }
@@ -32,25 +50,38 @@ public class BookSystem : MonoBehaviour
     public void ToggleBook()
     {
         isBookOpen = !isBookOpen;
-        bookPanel.SetActive(isBookOpen);
+        if (bookPanel != null) bookPanel.SetActive(isBookOpen);
 
         if (isBookOpen)
         {
-            currentPageIndex = 0; // Sempre começa pela capa
+            currentPageIndex = 0; 
             UpdatePage();
-            //Time.timeScale = 0f; // Pausa o jogo ao ler
+            if (uiBlurVolume != null) uiBlurVolume.weight = 1f;
+            //Time.timeScale = 0f; 
             
-            // Libera e mostra o cursor para clicar no botão
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
+
+            if (!hasDroppedMap)
+            {
+                DropMapItem();
+            }
         }
         else
         {
-            Time.timeScale = 1f; // Despausa o jogo
-            
-            // Esconde e trava o cursor de volta no jogo
+            if (uiBlurVolume != null) uiBlurVolume.weight = 0f;
+            //Time.timeScale = 1f; 
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
+        }
+    }
+
+    private void DropMapItem()
+    {
+        if (mapPrefab != null && dropPoint != null)
+        {
+            Instantiate(mapPrefab, dropPoint.position, dropPoint.rotation);
+            hasDroppedMap = true; 
         }
     }
 
@@ -63,13 +94,13 @@ public class BookSystem : MonoBehaviour
         }
         else
         {
-            ToggleBook(); // Fecha o livro ao chegar na última página
+            ToggleBook(); 
         }
     }
 
     void UpdatePage()
     {
-        if (bookPages.Count > 0)
+        if (bookPages.Count > 0 && displayImage != null)
         {
             displayImage.sprite = bookPages[currentPageIndex];
         }

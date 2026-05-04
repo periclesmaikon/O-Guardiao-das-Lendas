@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: aa6430dc92a010541b66a0b86cd9815d
-timeCreated: 1494945757
+guid: dc739d782ed6fe5439fb6de4a13f53bd
+timeCreated: 1494945768
 licenseType: Store
 AudioImporter:
   serializedVersion: 6
@@ -25,5 +25,5 @@ AssetOrigin:
   productId: 90678
   packageName: Footstep(Snow and Grass)
   packageVersion: 1.0
-  assetPath: Assets/Audios/walking-2.wav
+  assetPath: Assets/Footstep(Snow and Grass)/Stepssingle sound/grass/Grass1 27-Audio.wav
   uploadId: 180196
