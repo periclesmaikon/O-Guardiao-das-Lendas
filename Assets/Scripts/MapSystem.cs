@@ -14,6 +14,7 @@ public class MapSystem : MonoBehaviour
 
     public bool isMapOpen { get; private set; } = false;
     private bool hasMap = false;
+    public bool wasMapOpened { get; private set; } = false;
 
     void Start()
     {
@@ -41,7 +42,6 @@ public class MapSystem : MonoBehaviour
     public void CollectMap()
     {
         hasMap = true;
-        Debug.Log("Mapa coletado!");
     }
 
     public void ToggleMap()
@@ -52,6 +52,7 @@ public class MapSystem : MonoBehaviour
 
         if (isMapOpen)
         {
+            wasMapOpened = true;
             // Aplica o peso máximo no volume do desfoque
             if (uiBlurVolume != null) uiBlurVolume.weight = 1f;
         }
