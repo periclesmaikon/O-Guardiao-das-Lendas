@@ -14,12 +14,12 @@
             {
                 "type": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
                 "key": "Scattering.ParentObjectsWithSurface",
-                "value": "{\"m_Value\":true}"
+                "value": "{\"m_Value\":false}"
             },
             {
                 "type": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
                 "key": "Scattering.AvoidOverlappingObjects",
-                "value": "{\"m_Value\":true}"
+                "value": "{\"m_Value\":false}"
             },
             {
                 "type": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
@@ -64,12 +64,12 @@
             {
                 "type": "UnityEditor.Polybrush.PrefabLoadout, Unity.Polybrush.Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                 "key": "ScatteringEditor.userLoadout",
-                "value": "{\"m_Value\":{\"infos\":[{\"palette\":{\"fileID\":11400000,\"guid\":\"15cba9a471cc17e40a5c2ed65d702b3f\",\"type\":2},\"prefab\":{\"fileID\":919132149155446097,\"guid\":\"7b539204f83d010408ca2490b9053054\",\"type\":3}},{\"palette\":{\"fileID\":11400000,\"guid\":\"15cba9a471cc17e40a5c2ed65d702b3f\",\"type\":2},\"prefab\":{\"fileID\":919132149155446097,\"guid\":\"6697e89a412711f42ba73cba0841df1f\",\"type\":3}},{\"palette\":{\"fileID\":11400000,\"guid\":\"15cba9a471cc17e40a5c2ed65d702b3f\",\"type\":2},\"prefab\":{\"fileID\":919132149155446097,\"guid\":\"f57d919d3ea35ae4a89a7804384d0f5d\",\"type\":3}}]}}"
+                "value": "{\"m_Value\":{\"infos\":[{\"palette\":{\"fileID\":11400000,\"guid\":\"eafeff49a9ac8a945ae412754c2d11c6\",\"type\":2},\"prefab\":{\"fileID\":8327649072775894659,\"guid\":\"2232ad4df7763454d93e3d9dc99bc3bb\",\"type\":3}}]}}"
             },
             {
                 "type": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
                 "key": "ScatteringEditor.PreviewThumSize",
-                "value": "{\"m_Value\":60}"
+                "value": "{\"m_Value\":79}"
             },
             {
                 "type": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BusInteraction : MonoBehaviour, IInteractable
 {
@@ -14,7 +15,7 @@ public class BusInteraction : MonoBehaviour, IInteractable
         if (mapSystem != null && mapSystem.wasMapOpened)
         {
             // Chama a tela de carregamento
-            LoadingManager.Instance.LoadScene(sceneToLoad);
+            SceneManager.LoadScene(sceneToLoad);
         }
     }
 

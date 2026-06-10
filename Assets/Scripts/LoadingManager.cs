@@ -11,6 +11,14 @@ public class LoadingManager : MonoBehaviour
     public GameObject loadingScreen;
     public Slider progressBar;
 
+    void Start()
+    {
+        if (loadingScreen != null) 
+        {
+            loadingScreen.SetActive(false);
+        }
+    }
+
     void Awake()
     {
         if (Instance == null) { Instance = this; DontDestroyOnLoad(gameObject); }
@@ -24,8 +32,11 @@ public class LoadingManager : MonoBehaviour
 
     IEnumerator LoadAsynchronously(string sceneName)
     {
-        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
         loadingScreen.SetActive(true);
+
+        yield return null;
+
+        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
 
         while (!operation.isDone)
         {
@@ -33,5 +44,8 @@ public class LoadingManager : MonoBehaviour
             if (progressBar != null) progressBar.value = progress;
             yield return null;
         }
+
+        yield return new WaitForSeconds(0.5f); 
+        loadingScreen.SetActive(false);
     }
 }

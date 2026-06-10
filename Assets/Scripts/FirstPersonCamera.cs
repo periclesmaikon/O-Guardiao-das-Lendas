@@ -32,6 +32,7 @@ public class FirstPersonCamera : MonoBehaviour {
     }
 
     void Update() {
+        if (Time.timeScale == 0f) return;
 
         float verticalDelta = Input.GetAxisRaw("Mouse Y") * sensitivityY;
         float horizontalDelta = Input.GetAxisRaw("Mouse X") * sensitivityX;
