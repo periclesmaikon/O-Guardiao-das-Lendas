@@ -20,7 +20,7 @@ MonoBehaviour:
       m_RotationRangeMax: {x: -90, y: 360, z: 0}
       m_ScaleRangeMin: {x: 0, y: 0, z: 0}
       m_ScaleRangeMax: {x: 0, y: 0, z: 0}
-      m_UniformScale: {x: 3, y: 3}
+      m_UniformScale: {x: 1, y: 1.5}
       m_UniformBool: 1
       m_XRotationBool: 1
       m_YRotationBool: 1
@@ -52,7 +52,7 @@ MonoBehaviour:
       m_RotationRangeMax: {x: -90, y: 360, z: 0}
       m_ScaleRangeMin: {x: 1, y: 1, z: 1}
       m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 3, y: 3}
+      m_UniformScale: {x: 0.6, y: 1.5}
       m_UniformBool: 1
       m_XRotationBool: 1
       m_YRotationBool: 1
@@ -63,12 +63,12 @@ MonoBehaviour:
     name: CommonTree_3
   - gameObject: {fileID: 919132149155446097, guid: 36b73cfb71fcbe74aae9a7becfd67c78, type: 3}
     settings:
-      m_Strength: 45.92438
+      m_Strength: 94.40998
       m_RotationRangeMin: {x: -90, y: 0, z: 0}
       m_RotationRangeMax: {x: -90, y: 360, z: 0}
       m_ScaleRangeMin: {x: 1, y: 1, z: 1}
       m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 3, y: 3}
+      m_UniformScale: {x: 0.6, y: 1.5}
       m_UniformBool: 1
       m_XRotationBool: 1
       m_YRotationBool: 1
@@ -100,7 +100,7 @@ MonoBehaviour:
       m_RotationRangeMax: {x: -90, y: 360, z: 0}
       m_ScaleRangeMin: {x: 1, y: 1, z: 1}
       m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 3, y: 3}
+      m_UniformScale: {x: 0.6, y: 1.5}
       m_UniformBool: 1
       m_XRotationBool: 1
       m_YRotationBool: 1
@@ -116,7 +116,7 @@ MonoBehaviour:
       m_RotationRangeMax: {x: -90, y: 360, z: 0}
       m_ScaleRangeMin: {x: 1, y: 1, z: 1}
       m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 3, y: 3}
+      m_UniformScale: {x: 0.6, y: 1.5}
       m_UniformBool: 1
       m_XRotationBool: 1
       m_YRotationBool: 1
@@ -132,7 +132,7 @@ MonoBehaviour:
       m_RotationRangeMax: {x: -90, y: 360, z: 0}
       m_ScaleRangeMin: {x: 1, y: 1, z: 1}
       m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 3, y: 3}
+      m_UniformScale: {x: 0.6, y: 1.5}
       m_UniformBool: 1
       m_XRotationBool: 1
       m_YRotationBool: 1
@@ -164,7 +164,7 @@ MonoBehaviour:
       m_RotationRangeMax: {x: -90, y: 360, z: 0}
       m_ScaleRangeMin: {x: 1, y: 1, z: 1}
       m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 3, y: 3}
+      m_UniformScale: {x: 0.6, y: 1.5}
       m_UniformBool: 1
       m_XRotationBool: 1
       m_YRotationBool: 1
