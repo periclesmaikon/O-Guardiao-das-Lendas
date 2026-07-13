@@ -20,6 +20,8 @@ public class FirstPersonCamera : MonoBehaviour {
     float smoothCoefx = 0.05f;
     float smoothCoefy = 0.05f;
 
+    [HideInInspector] public float nauseaTilt = 0f;
+
     void Start() {
 
         Cursor.visible = false;
@@ -47,7 +49,7 @@ public class FirstPersonCamera : MonoBehaviour {
 
         characterBody.localEulerAngles = new Vector3(0, rotationX, 0);
 
-        transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
+        transform.localEulerAngles = new Vector3(-rotationY, rotationX, nauseaTilt);
 
     }
 

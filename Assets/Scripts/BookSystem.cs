@@ -35,7 +35,9 @@ public class BookSystem : MonoBehaviour
     {
         if (bookPanel != null) bookPanel.SetActive(false);
         if (uiBlurVolume != null) uiBlurVolume.weight = 0f;
-        hasDroppedMap = PlayerPrefs.GetInt("MapDropped", 0) == 1;
+        
+        // O estado inicial de "já caiu nesta sessão" começa como falso
+        hasDroppedMap = false; 
     }
 
     void Update()
@@ -63,7 +65,11 @@ public class BookSystem : MonoBehaviour
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
 
-            if (!hasDroppedMap) DropMapItem();
+            // SÓ FAZ CAIR SE: não caiu nesta sessão de jogo AINDA E o jogador NÃO coletou o mapa globalmente
+            if (!hasDroppedMap && mapSystem != null && !mapSystem.HasMapCollected()) 
+            {
+                DropMapItem();
+            }
         }
         else
         {
@@ -76,17 +82,15 @@ public class BookSystem : MonoBehaviour
     }
 
     private void DropMapItem()
-{
-    if (mapPrefab != null && dropPoint != null)
     {
-        Instantiate(mapPrefab, dropPoint.position, dropPoint.rotation);
-
-        hasDroppedMap = true;
-
-        PlayerPrefs.SetInt("MapDropped", 1);
-        PlayerPrefs.Save();
+        if (mapPrefab != null && dropPoint != null)
+        {
+            Instantiate(mapPrefab, dropPoint.position, dropPoint.rotation);
+            
+            // Impede que o mapa fique spawnando toda vez que ele abre/fecha o livro na mesma partida
+            hasDroppedMap = true; 
+        }
     }
-}
 
     public void NextPage()
     {

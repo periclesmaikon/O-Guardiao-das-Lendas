@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 public class LegendPuzzleManager : MonoBehaviour
 {
@@ -19,6 +20,19 @@ public class LegendPuzzleManager : MonoBehaviour
     [Tooltip("Prefab da Etiqueta do Inventário")]
     public GameObject uiFragmentPrefab;
 
+    [Header("Feedback Visual e Sonoro")]
+    [Tooltip("Objeto de UI (Texto ou Painel) que diz 'LENDA SALVA'")]
+    public GameObject lendaSalvaUI;
+    [Tooltip("Efeito sonoro de acerto")]
+    public AudioClip somAprovacao;
+    [Tooltip("Componente AudioSource para tocar o som")]
+    public AudioSource audioSource;
+    [Tooltip("Tempo que a mensagem fica na tela (em segundos)")]
+    public float tempoExibicaoUI = 2f;
+
+    [Tooltip("Duração do Fade In/Out (em segundos)")]
+    public float tempoFade = 0.5f;
+
     private bool isSolved = false;
 
     void Start()
@@ -28,6 +42,7 @@ public class LegendPuzzleManager : MonoBehaviour
         {
             LockPuzzleAsSolved(true);
         }
+        if (lendaSalvaUI != null) lendaSalvaUI.SetActive(false);
     }
 
     public void CheckPuzzleCompletion()
@@ -78,6 +93,62 @@ public class LegendPuzzleManager : MonoBehaviour
 
         // 4. Trava as peças na página permanentemente
         LockPuzzleAsSolved(false);
+
+        TocarFeedbackDeSucesso();
+    }
+
+    private void TocarFeedbackDeSucesso()
+    {
+        Debug.Log("Puzzle resolvido com sucesso! Iniciando feedbacks com fade.");
+
+        if (somAprovacao != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(somAprovacao);
+        }
+
+        if (lendaSalvaUI != null)
+        {
+            lendaSalvaUI.SetActive(true);
+            // Inicia a nova Coroutine que faz o Fade In, espera e faz o Fade Out
+            StartCoroutine(AnimarFadeUI());
+        }
+    }
+
+    private IEnumerator AnimarFadeUI()
+    {
+        // Pega o CanvasGroup. Se você esquecer de colocar na Unity, o script cria um sozinho!
+        CanvasGroup cg = lendaSalvaUI.GetComponent<CanvasGroup>();
+        if (cg == null)
+        {
+            cg = lendaSalvaUI.AddComponent<CanvasGroup>();
+        }
+
+        // --- FADE IN ---
+        float tempoDecorrido = 0f;
+        while (tempoDecorrido < tempoFade)
+        {
+            // Usamos unscaledDeltaTime para a animação não congelar se o jogo estiver pausado
+            tempoDecorrido += Time.unscaledDeltaTime; 
+            cg.alpha = Mathf.Clamp01(tempoDecorrido / tempoFade);
+            yield return null;
+        }
+        cg.alpha = 1f; // Garante que terminou 100% visível
+
+        // --- TEMPO DE ESPERA NA TELA ---
+        yield return new WaitForSecondsRealtime(tempoExibicaoUI);
+
+        // --- FADE OUT ---
+        tempoDecorrido = 0f;
+        while (tempoDecorrido < tempoFade)
+        {
+            tempoDecorrido += Time.unscaledDeltaTime;
+            cg.alpha = 1f - Mathf.Clamp01(tempoDecorrido / tempoFade);
+            yield return null;
+        }
+        cg.alpha = 0f; // Garante que terminou 100% invisível
+
+        // Desativa o objeto para economizar processamento depois que ficou invisível
+        lendaSalvaUI.SetActive(false);
     }
 
     private void LockPuzzleAsSolved(bool isLoadingSave)
@@ -126,6 +197,67 @@ public class LegendPuzzleManager : MonoBehaviour
         }
     }
 
+    public void PrepararTentarNovamente()
+    {
+        isSolved = false;
+
+        // 1. Remove o status de lenda resolvida no sistema
+        PlayerPrefs.SetInt("LegendSolved_" + legendName, 0);
+
+        // 2. Pega a string principal do inventário para limpar
+        string currentInventory = PlayerPrefs.GetString("CollectedFragmentsList", "");
+        List<string> inventoryList = new List<string>(currentInventory.Split(new char[] { ';' }, System.StringSplitOptions.RemoveEmptyEntries));
+
+        // 3. Limpa o save APENAS dos fragmentos desta lenda
+        if (allLegendFragmentIDs != null)
+        {
+            foreach (string id in allLegendFragmentIDs)
+            {
+                PlayerPrefs.DeleteKey("Consumed_" + id);
+                PlayerPrefs.DeleteKey("Fragment_" + id);
+                PlayerPrefs.DeleteKey("Collected_" + id); 
+
+                // Remove o item da lista geral do inventário
+                inventoryList.RemoveAll(item => item.StartsWith(id + ":") || item == id);
+            }
+        }
+        
+        PlayerPrefs.SetString("CollectedFragmentsList", string.Join(";", inventoryList));
+        PlayerPrefs.Save();
+
+        ClearPuzzleSlots();
+
+        FragmentUIManager uiManager = Object.FindFirstObjectByType<FragmentUIManager>();
+        if (uiManager != null) uiManager.UpdateFragmentListUI();
+
+        // --- MUDANÇA PRINCIPAL AQUI ---
+        // 4. Busca TODOS os fragmentos na cena inteira, mesmo os invisíveis (Recurso da Unity 6)
+        FragmentCollectible[] todosOsFragmentos = Object.FindObjectsByType<FragmentCollectible>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        
+        int fragmentosReativados = 0;
+
+        foreach (FragmentCollectible frag in todosOsFragmentos)
+        {
+            // Verifica se a lista de IDs desta lenda contém o ID que está dentro do script daquele objeto
+            if (allLegendFragmentIDs.Contains(frag.fragmentID))
+            {
+                frag.gameObject.SetActive(true); // Acorda o objeto!
+                fragmentosReativados++;
+                Debug.Log($"[PuzzleManager] Fragmento reativado com sucesso: {frag.fragmentName} (ID: {frag.fragmentID})");
+            }
+        }
+
+        if (fragmentosReativados == 0)
+        {
+            Debug.LogWarning($"[PuzzleManager] AVISO: Nenhum fragmento da lenda {legendName} foi reativado. Verifique se a variável 'Fragment ID' no Inspector das peças bate com a lista da lenda.");
+        }
+
+        // 5. Esconde a Lenda e faz os perigos voltarem para o mapa
+        if (legendObject3D != null) legendObject3D.SetActive(false);
+        if (perigosDaLenda != null) perigosDaLenda.SetActive(true);
+
+        Debug.Log($"[PuzzleManager] A lenda {legendName} foi resetada para o Tentar Novamente!");
+    }
     private void ClearPuzzleSlots()
     {
         foreach (var slot in puzzleSlots)

@@ -14,7 +14,8 @@ public class BusInteraction : MonoBehaviour, IInteractable
         // Só executa a ação se mapa já tiver sido aberto
         if (mapSystem != null && mapSystem.wasMapOpened)
         {
-            // Chama a tela de carregamento
+            PlayerPrefs.SetInt("PegouOnibus", 1);
+            PlayerPrefs.Save();
             SceneManager.LoadScene(sceneToLoad);
         }
     }

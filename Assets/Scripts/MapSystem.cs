@@ -20,8 +20,9 @@ public class MapSystem : MonoBehaviour
     {
         if (mapPanel != null) mapPanel.SetActive(false);
         
-        // Garante que o desfoque extra comece totalmente zerado
         if (uiBlurVolume != null) uiBlurVolume.weight = 0f;
+
+        hasMap = PlayerPrefs.GetInt("MapCollected", 0) == 1;
     }
 
     void Update()
@@ -39,9 +40,18 @@ public class MapSystem : MonoBehaviour
         }
     }
 
+    // Função nova que o BookSystem usa para checar o progresso do jogador
+    public bool HasMapCollected()
+    {
+        return hasMap;
+    }
+
     public void CollectMap()
     {
         hasMap = true;
+
+        PlayerPrefs.SetInt("MapCollected", 1);
+        PlayerPrefs.Save();
     }
 
     public void ToggleMap()
@@ -53,12 +63,10 @@ public class MapSystem : MonoBehaviour
         if (isMapOpen)
         {
             wasMapOpened = true;
-            // Aplica o peso máximo no volume do desfoque
             if (uiBlurVolume != null) uiBlurVolume.weight = 1f;
         }
         else
         {
-            // Zera o peso
             if (uiBlurVolume != null) uiBlurVolume.weight = 0f;
         }
     }

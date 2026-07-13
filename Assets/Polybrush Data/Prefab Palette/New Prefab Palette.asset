@@ -207,7 +207,7 @@ MonoBehaviour:
     name: Rock_Moss_5
   - gameObject: {fileID: 919132149155446097, guid: 01753e1c749ebc348b69b83854ed02e6, type: 3}
     settings:
-      m_Strength: 50
+      m_Strength: 95.70622
       m_RotationRangeMin: {x: 0, y: 0, z: 0}
       m_RotationRangeMax: {x: 0, y: 360, z: 0}
       m_ScaleRangeMin: {x: 1, y: 1, z: 1}
@@ -319,7 +319,7 @@ MonoBehaviour:
     name: Rock_Snow_6
   - gameObject: {fileID: 919132149155446097, guid: c50ae62d884b73c4098e0347c8c6cfba, type: 3}
     settings:
-      m_Strength: 50
+      m_Strength: 100
       m_RotationRangeMin: {x: 0, y: 0, z: 0}
       m_RotationRangeMax: {x: 0, y: 360, z: 0}
       m_ScaleRangeMin: {x: 1, y: 1, z: 1}
