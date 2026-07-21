@@ -26,7 +26,7 @@ public class LegendInteraction : MonoBehaviour, IInteractable
     public LegendQuizManager quizManager; 
     
     [Header("Dados Desta Lenda Específica")]
-    public LegendData dadosDaLenda; // Aqui ficam as perguntas e imagens únicas dessa lenda!
+    public LegendData dadosDaLenda;
 
     public void Interact()
     {
@@ -34,6 +34,8 @@ public class LegendInteraction : MonoBehaviour, IInteractable
         {
             // O modelo 3D envia SEUS dados específicos para o gerenciador central
             quizManager.VerificarEstadoEInteragir(dadosDaLenda);
+            PlayerPrefs.SetInt("Tutorial_SaciConcluido", 1);
+            PlayerPrefs.Save();
         }
         else
         {

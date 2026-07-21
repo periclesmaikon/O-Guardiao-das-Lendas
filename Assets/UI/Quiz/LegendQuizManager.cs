@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement; 
 
 public class LegendQuizManager : MonoBehaviour
 {
@@ -37,6 +38,15 @@ public class LegendQuizManager : MonoBehaviour
     public GameObject cercaFechadaFloresta;
     public GameObject portaoAbertoFloresta;
 
+    [Header("Créditos (Fim de Jogo)")]
+    public GameObject painelCreditos;
+    [Tooltip("Arraste as 3 imagens das insígnias que ficam na tela de créditos")]
+    public Image[] imagensInsigniasCreditos;
+    [Tooltip("Escreva exatamente os nomes das insignias)")]
+    public string[] nomesInsigniasCreditos;
+    [Tooltip("Nome exato da cena do Menu Principal para o botão voltar")]
+    public string nomeCenaMenu = "Menu";
+
     [Header("Controle do Jogador")]
     public MonoBehaviour playerMovementScript;
     private LegendData lendaAtual;
@@ -49,6 +59,7 @@ public class LegendQuizManager : MonoBehaviour
         if (painelErro != null) painelErro.SetActive(false);
         if (painelDestinos != null) painelDestinos.SetActive(false);
         if (painelInsignia != null) painelInsignia.SetActive(false);
+        if (painelCreditos != null) painelCreditos.SetActive(false);
 
         CarregarCaminhosSalvos();
         ConfigurarBotoesIniciais();
@@ -56,7 +67,6 @@ public class LegendQuizManager : MonoBehaviour
 
     private void ConfigurarBotoesIniciais()
     {
-        // Configura botões de resposta do quiz de forma limpa
         textosDosBotoes = new TextMeshProUGUI[botoesResposta.Length];
         for (int i = 0; i < botoesResposta.Length; i++)
         {
@@ -66,7 +76,6 @@ public class LegendQuizManager : MonoBehaviour
             botoesResposta[indexBotao].onClick.AddListener(() => AvaliarResposta(indexBotao));
         }
 
-        // LIMPEZA CRÍTICA: Remove listeners antigos para evitar chamadas duplas ou fantasmas
         if (botaoTentarNovamente != null)
         {
             botaoTentarNovamente.onClick.RemoveAllListeners();
@@ -76,7 +85,7 @@ public class LegendQuizManager : MonoBehaviour
         if (botaoProximaLenda != null)
         {
             botaoProximaLenda.onClick.RemoveAllListeners();
-            botaoProximaLenda.onClick.AddListener(AbrirOpcoesDestino);
+            botaoProximaLenda.onClick.AddListener(TentarCaminhoOuCreditos);
         }
 
         if (botaoLago != null)
@@ -96,52 +105,35 @@ public class LegendQuizManager : MonoBehaviour
 
     public void VerificarEstadoEInteragir(LegendData dadosRecebidos)
     {
-        // --- ESCUDO ANTI-CLIQUE FANTASMA ---
-        // Se alguma tela já estiver na cara do jogador, ignora totalmente o clique no 3D
         if ((painelQuiz != null && painelQuiz.activeSelf) ||
             (painelErro != null && painelErro.activeSelf) ||
             (painelDestinos != null && painelDestinos.activeSelf) ||
-            (painelInsignia != null && painelInsignia.activeSelf))
+            (painelInsignia != null && painelInsignia.activeSelf) ||
+            (painelCreditos != null && painelCreditos.activeSelf))
         {
-            Debug.LogWarning("[QuizManager] Bloqueando interação 3D: O jogador clicou na UI e o clique atravessou!");
-            return; // O "return" cancela a função aqui mesmo
+            Debug.LogWarning("[QuizManager] Bloqueando interação 3D: UI está aberta.");
+            return; 
         }
 
-        // Salva a lenda clicada para usar nas outras funções
         lendaAtual = dadosRecebidos;
 
-        if (lendaAtual == null)
-        {
-            Debug.LogError("[QuizManager] ERRO CRÍTICO: Dados recebidos da lenda estão nulos!");
-            return;
-        }
+        if (lendaAtual == null) return;
 
-        // O PlayerPrefs usa o nome da insígnia como chave. Assim Saci e Iara não se misturam!
         int statusQuiz = PlayerPrefs.GetInt("StatusQuiz_" + lendaAtual.nomeInsignia, 0);
-        Debug.Log($"[QuizManager] Interagindo com: {lendaAtual.nomeInsignia}. Status do Save atual: {statusQuiz}");
-
-        if (statusQuiz == 0)
-        {
-            AbrirQuiz();
-        }
-        else if (statusQuiz == 1)
-        {
-            MostrarInsigniaSalva(true);
-        }
-        else if (statusQuiz == 2)
-        {
-            MostrarInsigniaSalva(false);
-        }
+        
+        if (statusQuiz == 0) AbrirQuiz();
+        else if (statusQuiz == 1) MostrarInsigniaSalva(true);
+        else if (statusQuiz == 2) MostrarInsigniaSalva(false);
     }
 
     private void AbrirQuiz()
     {
-        Debug.Log("[QuizManager] Abrindo tela principal do QUIZ.");
         PausarJogoEExibirMouse(true);
        
         if (painelErro != null) painelErro.SetActive(false);
         if (painelDestinos != null) painelDestinos.SetActive(false);
         if (painelInsignia != null) painelInsignia.SetActive(false);
+        if (painelCreditos != null) painelCreditos.SetActive(false);
 
         textoPergunta.text = lendaAtual.pergunta;
         for (int i = 0; i < lendaAtual.respostas.Length; i++)
@@ -153,11 +145,8 @@ public class LegendQuizManager : MonoBehaviour
 
     private void AvaliarResposta(int indiceEscolhido)
     {
-        Debug.Log($"[QuizManager] Jogador escolheu a alternativa: {indiceEscolhido}. Resposta correta esperada: {lendaAtual.indiceRespostaCorreta}");
-
         if (indiceEscolhido == lendaAtual.indiceRespostaCorreta)
         {
-            Debug.Log("<color=green>[QuizManager] Resposta CORRETA!</color>");
             PlayerPrefs.SetInt("StatusQuiz_" + lendaAtual.nomeInsignia, 1);
             PlayerPrefs.Save();
 
@@ -169,15 +158,44 @@ public class LegendQuizManager : MonoBehaviour
             if (textoNomeInsigniaUI != null) textoNomeInsigniaUI.text = lendaAtual.nomeInsignia;
             if (textoDescricaoInsigniaUI != null) textoDescricaoInsigniaUI.text = lendaAtual.descricaoInsignia;
 
-            botaoContinuarInsignia.onClick.RemoveAllListeners();
-            botaoContinuarInsignia.onClick.AddListener(AbrirOpcoesDestino);
+            if (botaoContinuarInsignia != null)
+            {
+                botaoContinuarInsignia.onClick.RemoveAllListeners();
+                TextMeshProUGUI textoBotao = botaoContinuarInsignia.GetComponentInChildren<TextMeshProUGUI>();
+
+                if (JogoEstaFinalizado())
+                {
+                    botaoContinuarInsignia.onClick.AddListener(AbrirCreditos); 
+                    if (textoBotao != null) textoBotao.text = "FINALIZAR";
+                }
+                else
+                {
+                    botaoContinuarInsignia.onClick.AddListener(AbrirOpcoesDestino); 
+                    if (textoBotao != null) textoBotao.text = "SALVAR PRÓXIMA LENDA";
+                }
+            }
 
             painelQuiz.SetActive(false);
             if (painelInsignia != null) painelInsignia.SetActive(true);
         }
         else
         {
-            Debug.Log("<color=red>[QuizManager] Resposta ERRADA!</color>");
+            if (botaoProximaLenda != null)
+            {
+                TextMeshProUGUI textoBotaoErro = botaoProximaLenda.GetComponentInChildren<TextMeshProUGUI>();
+                if (textoBotaoErro != null)
+                {
+                    if (JogoEstaFinalizado())
+                    {
+                        textoBotaoErro.text = "ENCERRAR";
+                    }
+                    else
+                    {
+                        textoBotaoErro.text = "SALVAR PRÓXIMA LENDA";
+                    }
+                }
+            }
+
             painelQuiz.SetActive(false);
             if (painelErro != null) painelErro.SetActive(true);
         }
@@ -185,7 +203,6 @@ public class LegendQuizManager : MonoBehaviour
 
     private void MostrarInsigniaSalva(bool acertouNoPassado)
     {
-        Debug.Log($"[QuizManager] Mostrando insígnia já respondida anteriormente. Acertou? {acertouNoPassado}");
         PausarJogoEExibirMouse(true);
 
         if (imagemInsigniaUI != null)
@@ -198,80 +215,99 @@ public class LegendQuizManager : MonoBehaviour
         if (textoDescricaoInsigniaUI != null)
         {
             textoDescricaoInsigniaUI.text = acertouNoPassado ? lendaAtual.descricaoInsignia : "Você não conseguiu conquistar esta insígnia.";
-
         }
 
-        botaoContinuarInsignia.onClick.RemoveAllListeners();
-        botaoContinuarInsignia.onClick.AddListener(AbrirOpcoesDestino);
+        if (botaoContinuarInsignia != null)
+        {
+            botaoContinuarInsignia.onClick.RemoveAllListeners();
+            botaoContinuarInsignia.onClick.AddListener(FecharQuiz); 
+
+            TextMeshProUGUI textoBotao = botaoContinuarInsignia.GetComponentInChildren<TextMeshProUGUI>();
+            if (textoBotao != null) textoBotao.text = "FECHAR";
+        }
 
         if (painelInsignia != null) painelInsignia.SetActive(true);
     }
 
     public void TentarNovamente() 
     {
-        Debug.Log("[QuizManager] Botão Tentar Novamente clicado. Resetando...");
-        
-        // Zera o fato de ter errado o quiz desta lenda
         PlayerPrefs.SetInt("StatusQuiz_" + lendaAtual.nomeInsignia, 0);
         PlayerPrefs.Save();
 
-        // Pede para o PuzzleManager devolver os itens e esconder a lenda
-        if (lendaAtual.puzzleManager != null)
-        {
-            lendaAtual.puzzleManager.PrepararTentarNovamente();
-        }
-        else
-        {
-            Debug.LogWarning("[QuizManager] O PuzzleManager não foi linkado nos Dados da Lenda!");
-        }
-
+        if (lendaAtual.puzzleManager != null) lendaAtual.puzzleManager.PrepararTentarNovamente();
+        
         FecharQuiz(); 
     }
 
-    public void AbrirOpcoesDestino() // Mudei para public
+    private void TentarCaminhoOuCreditos()
     {
-        Debug.Log("[QuizManager] Executando método AbrirOpcoesDestino().");
         if (painelErro != null && painelErro.activeSelf)
         {
-            Debug.Log($"[QuizManager] Jogador optou por desistir/pular. Salvando status 2 para: {lendaAtual.nomeInsignia}");
             PlayerPrefs.SetInt("StatusQuiz_" + lendaAtual.nomeInsignia, 2);
             PlayerPrefs.Save();
         }
 
+        if (JogoEstaFinalizado())
+        {
+            AbrirCreditos();
+        }
+        else
+        {
+            AbrirOpcoesDestino();
+        }
+    }
+
+    public void AbrirOpcoesDestino() 
+    {
         AtualizarBotoesDestino();
 
         if (painelQuiz != null) painelQuiz.SetActive(false);
         if (painelErro != null) painelErro.SetActive(false);
         if (painelInsignia != null) painelInsignia.SetActive(false);
        
-        if (painelDestinos != null)
-        {
-            painelDestinos.SetActive(true);
-            Debug.Log("[QuizManager] SUCESSO: Painel de Destinos ativado.");
-        }
-        else
-        {
-            Debug.LogError("[QuizManager] ERRO: A variável 'painelDestinos' está nula no Inspector!");
-        }
+        if (painelDestinos != null) painelDestinos.SetActive(true);
+    }
 
+    public void AbrirCreditos()
+    {
+        Debug.Log("[QuizManager] Fim de jogo detectado! Abrindo Créditos...");
+        
+        if (painelQuiz != null) painelQuiz.SetActive(false);
+        if (painelErro != null) painelErro.SetActive(false);
+        if (painelInsignia != null) painelInsignia.SetActive(false);
+        if (painelDestinos != null) painelDestinos.SetActive(false);
+
+        if (painelCreditos != null)
+        {
+            painelCreditos.SetActive(true);
+            
+            for (int i = 0; i < imagensInsigniasCreditos.Length; i++)
+            {
+                if (imagensInsigniasCreditos[i] != null && i < nomesInsigniasCreditos.Length)
+                {
+                    int status = PlayerPrefs.GetInt("StatusQuiz_" + nomesInsigniasCreditos[i], 0);
+                    imagensInsigniasCreditos[i].color = (status == 1) ? Color.white : new Color(0.2f, 0.2f, 0.2f, 1f);
+                }
+            }
+        }
+    }
+
+    public void VoltarParaMenu()
+    {
+        Time.timeScale = 1f; 
+        SceneManager.LoadScene(nomeCenaMenu);
+    }
+
+    private bool JogoEstaFinalizado()
+    {
+        return PlayerPrefs.GetInt("CaminhoAberto_Lago", 0) == 1 && 
+               PlayerPrefs.GetInt("CaminhoAberto_Floresta", 0) == 1;
     }
 
     private void AtualizarBotoesDestino()
     {
-        if (botaoLago != null)
-        {
-            // Lê o save: 1 significa que já está aberto
-            bool lagoJaAberto = PlayerPrefs.GetInt("CaminhoAberto_Lago", 0) == 1;
-            
-            // Se já estiver aberto (true), interactable vira false (fica escuro e in-clicável)
-            botaoLago.interactable = !lagoJaAberto; 
-        }
-
-        if (botaoFloresta != null)
-        {
-            bool florestaJaAberta = PlayerPrefs.GetInt("CaminhoAberto_Floresta", 0) == 1;
-            botaoFloresta.interactable = !florestaJaAberta;
-        }
+        if (botaoLago != null) botaoLago.interactable = !(PlayerPrefs.GetInt("CaminhoAberto_Lago", 0) == 1);
+        if (botaoFloresta != null) botaoFloresta.interactable = !(PlayerPrefs.GetInt("CaminhoAberto_Floresta", 0) == 1);
     }
 
     private void PausarJogoEExibirMouse(bool pausar)
@@ -284,27 +320,21 @@ public class LegendQuizManager : MonoBehaviour
 
     private void IrParaLago()
     {
-        Debug.Log("[QuizManager] Direcionando jogador para o Lago...");
         PlayerPrefs.SetInt("CaminhoAberto_Lago", 1);
         PlayerPrefs.Save();
-
         if (paredeInvisivelLago != null) paredeInvisivelLago.SetActive(false);
         if (cercaFechadaLago != null) cercaFechadaLago.SetActive(false);
         if (portaoAbertoLago != null) portaoAbertoLago.SetActive(true);
-
         FecharQuiz();
     }
 
     private void IrParaFloresta()
     {
-        Debug.Log("[QuizManager] Direcionando jogador para a Floresta...");
         PlayerPrefs.SetInt("CaminhoAberto_Floresta", 1);
         PlayerPrefs.Save();
-
         if (paredeInvisivelFloresta != null) paredeInvisivelFloresta.SetActive(false);
         if (cercaFechadaFloresta != null) cercaFechadaFloresta.SetActive(false);
         if (portaoAbertoFloresta != null) portaoAbertoFloresta.SetActive(true);
-
         FecharQuiz();
     }
 
@@ -316,7 +346,6 @@ public class LegendQuizManager : MonoBehaviour
             if (cercaFechadaLago != null) cercaFechadaLago.SetActive(false);
             if (portaoAbertoLago != null) portaoAbertoLago.SetActive(true);
         }
-
         if (PlayerPrefs.GetInt("CaminhoAberto_Floresta", 0) == 1)
         {
             if (paredeInvisivelFloresta != null) paredeInvisivelFloresta.SetActive(false);
@@ -327,12 +356,11 @@ public class LegendQuizManager : MonoBehaviour
 
     public void FecharQuiz()
     {
-        Debug.Log("[QuizManager] Fechando todas as interfaces do Quiz e resumindo jogo.");
         PausarJogoEExibirMouse(false);
-
         if (painelQuiz != null) painelQuiz.SetActive(false);
         if (painelErro != null) painelErro.SetActive(false);
         if (painelDestinos != null) painelDestinos.SetActive(false);
         if (painelInsignia != null) painelInsignia.SetActive(false);
+        if (painelCreditos != null) painelCreditos.SetActive(false);
     }
 }

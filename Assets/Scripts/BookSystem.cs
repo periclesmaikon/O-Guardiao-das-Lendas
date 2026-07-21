@@ -8,6 +8,11 @@ public class BookSystem : MonoBehaviour
 {
     [Header("Configurações de UI")]
     public GameObject bookPanel;
+    public GameObject previousButtonObject;
+
+    [Header("Leitura Facilitada")]
+    [Tooltip("Referência ao painel com o texto legível")]
+    public GameObject painelLeitura;
     
     [Header("Conteúdo Interativo (Páginas)")]
     [Tooltip("GameObjects das páginas")]
@@ -92,8 +97,19 @@ public class BookSystem : MonoBehaviour
         }
     }
 
+    public void PreviousPage()
+    {
+        if (painelLeitura != null && painelLeitura.activeSelf) return;
+        if (currentPageIndex > 0)
+        {
+            currentPageIndex--;
+            UpdatePage();
+        }
+    }
+
     public void NextPage()
     {
+        if (painelLeitura != null && painelLeitura.activeSelf) return;
         if (currentPageIndex < bookPagesObjects.Count - 1)
         {
             currentPageIndex++;
@@ -118,6 +134,11 @@ public class BookSystem : MonoBehaviour
             {
                 bookPagesObjects[currentPageIndex].SetActive(true);
             }
+        }
+
+        if (previousButtonObject != null)
+        {
+            previousButtonObject.SetActive(currentPageIndex > 0);
         }
     }
 }

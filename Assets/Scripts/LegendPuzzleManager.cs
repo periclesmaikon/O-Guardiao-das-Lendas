@@ -45,6 +45,14 @@ public class LegendPuzzleManager : MonoBehaviour
         if (lendaSalvaUI != null) lendaSalvaUI.SetActive(false);
     }
 
+    private void OnDisable()
+    {
+        if (!isSolved)
+        {
+            ClearPuzzleSlots();
+        }
+    }
+
     public void CheckPuzzleCompletion()
     {
         if (isSolved) return; 
@@ -127,12 +135,11 @@ public class LegendPuzzleManager : MonoBehaviour
         float tempoDecorrido = 0f;
         while (tempoDecorrido < tempoFade)
         {
-            // Usamos unscaledDeltaTime para a animação não congelar se o jogo estiver pausado
             tempoDecorrido += Time.unscaledDeltaTime; 
             cg.alpha = Mathf.Clamp01(tempoDecorrido / tempoFade);
             yield return null;
         }
-        cg.alpha = 1f; // Garante que terminou 100% visível
+        cg.alpha = 1f;
 
         // --- TEMPO DE ESPERA NA TELA ---
         yield return new WaitForSecondsRealtime(tempoExibicaoUI);
@@ -145,9 +152,8 @@ public class LegendPuzzleManager : MonoBehaviour
             cg.alpha = 1f - Mathf.Clamp01(tempoDecorrido / tempoFade);
             yield return null;
         }
-        cg.alpha = 0f; // Garante que terminou 100% invisível
+        cg.alpha = 0f;
 
-        // Desativa o objeto para economizar processamento depois que ficou invisível
         lendaSalvaUI.SetActive(false);
     }
 
@@ -230,8 +236,7 @@ public class LegendPuzzleManager : MonoBehaviour
         FragmentUIManager uiManager = Object.FindFirstObjectByType<FragmentUIManager>();
         if (uiManager != null) uiManager.UpdateFragmentListUI();
 
-        // --- MUDANÇA PRINCIPAL AQUI ---
-        // 4. Busca TODOS os fragmentos na cena inteira, mesmo os invisíveis (Recurso da Unity 6)
+        // 4. Busca TODOS os fragmentos na cena inteira
         FragmentCollectible[] todosOsFragmentos = Object.FindObjectsByType<FragmentCollectible>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         
         int fragmentosReativados = 0;

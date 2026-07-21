@@ -48,6 +48,8 @@ public class FragmentCollectible : MonoBehaviour, IInteractable
             PlayerPrefs.SetString("CollectedFragmentsList", updatedList);
         }
 
+        PlayerPrefs.SetInt("Tutorial_PrimeiroFragmentoSaci", 1); //Para tutorial
+
         PlayerPrefs.Save();
 
         // Faz o objeto sumir da cena imediatamente

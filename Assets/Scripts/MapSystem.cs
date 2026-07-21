@@ -12,6 +12,9 @@ public class MapSystem : MonoBehaviour
     [Header("Efeito de Desfoque (Volume Dedicado)")]
     public Volume uiBlurVolume;
 
+    [Header("Controle do Jogador")]
+    public MonoBehaviour playerMovementScript;
+
     public bool isMapOpen { get; private set; } = false;
     private bool hasMap = false;
     public bool wasMapOpened { get; private set; } = false;
@@ -64,10 +67,18 @@ public class MapSystem : MonoBehaviour
         {
             wasMapOpened = true;
             if (uiBlurVolume != null) uiBlurVolume.weight = 1f;
+                        Time.timeScale = 0f; 
+            if (playerMovementScript != null) playerMovementScript.enabled = false;
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
         }
         else
         {
             if (uiBlurVolume != null) uiBlurVolume.weight = 0f;
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            Time.timeScale = 1f;
+            if (playerMovementScript != null) playerMovementScript.enabled = true;
         }
     }
 }

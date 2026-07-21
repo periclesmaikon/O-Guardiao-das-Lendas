@@ -3,7 +3,382 @@ guid: 24cd779a2d791404eb3e10cf37498979
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Azul prato
+    second: {fileID: 2100000, guid: c2f6851f525b01349acb86c16c5217e4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Azul prato.001
+    second: {fileID: 2100000, guid: c4d0355a5cef7bc4c8da06f27a022cb8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Branco Galinha
+    second: {fileID: 2100000, guid: ca1f4e80dbd8b954a8d4e2011152b673, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Crista Galinha
+    second: {fileID: 2100000, guid: 18bfa72baa33c7241b1fd556a9a0b0fa, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Erva
+    second: {fileID: 2100000, guid: 2b9fa1bb4ae04d9409ad29af9ac94bb0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Flor azul
+    second: {fileID: 2100000, guid: a313d4fc6a15c7b4a8eb49ff924242e5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Flor azul 2
+    second: {fileID: 2100000, guid: f07a04ebe80ab9d46b17fe90d7421e59, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Flor branca
+    second: {fileID: 2100000, guid: 81942364412cbbd4d9e2d771c9566c37, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Flor rosinha
+    second: {fileID: 2100000, guid: 0f1b5c887590ab34da09a45899ec48de, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Flor rosinha 2
+    second: {fileID: 2100000, guid: cff51c172a34046478e48cbe15bce745, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Marrom medio.001
+    second: {fileID: 2100000, guid: 7e465698eb815da4e9c1a3e9e3a16359, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Marrom.001
+    second: {fileID: 2100000, guid: 1e792850f92ee60409626bc5b55ad375, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Marrom.002
+    second: {fileID: 2100000, guid: 4e1d2fe4be00e594ea70ff346bd67ed1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Marrom.003
+    second: {fileID: 2100000, guid: c1dc27479591f22428498fda529b4fcb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Marrom.004
+    second: {fileID: 2100000, guid: aeedaed269abaea47af9b6384163f918, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Marrom.005
+    second: {fileID: 2100000, guid: 313eed576efc44d499bee234f2c1c6f1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.001
+    second: {fileID: 2100000, guid: ce5c6572fd5e3604da301d72986d9864, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.002
+    second: {fileID: 2100000, guid: afba78580b2f2904c8b82b77d0b595af, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.003
+    second: {fileID: 2100000, guid: 6288a7f922f05894895c2afcf4fc7a1f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.004
+    second: {fileID: 2100000, guid: 9fa3a46ec6b3404419fd5ff7c54a4acc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.005
+    second: {fileID: 2100000, guid: 12b675523d39a7847a1de043be7e90c6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.006
+    second: {fileID: 2100000, guid: 4b6f6a0cfae36fe4dac60ec8f31a1da7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Nariz Galinha
+    second: {fileID: 2100000, guid: 36cb2a97d9bff534b900d11487e95360, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Olho Galinha
+    second: {fileID: 2100000, guid: 7b3fa1d2014ce0241ac9b02137b4a2d0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Prateado claro
+    second: {fileID: 2100000, guid: 6451a7a292948044682022f3f1cf0407, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Prateado ferramenta
+    second: {fileID: 2100000, guid: cfd54ea972517ac4e9b4c7616ea96b58, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ROUND_ATLAS
+    second: {fileID: 2100000, guid: c7ea409227149014b90f16fad71fe7ef, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Rock2
+    second: {fileID: 2100000, guid: e2df1ac5d434c84448724c79a08c0386, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Rock3
+    second: {fileID: 2100000, guid: ba65675454689324fbe2ee08203fa409, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Rock4
+    second: {fileID: 2100000, guid: e3cdb83d07cd25b4793e68519c88ad48, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Telhas
+    second: {fileID: 2100000, guid: cdacba60d0324ed40bb2100d8121bf22, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Telhas escuro
+    second: {fileID: 2100000, guid: 3f7de3bd66ff0aa4b881cf820202ef0d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: "Telhas m\xE9dio"
+    second: {fileID: 2100000, guid: 38797d89140b03644ab8067f7d78fcab, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Verde claro
+    second: {fileID: 2100000, guid: 922bf8eb765770b4885c184a8a0084d2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Verde claro 2.001
+    second: {fileID: 2100000, guid: 25361ad092f32674e8bbb5fe40d8ce00, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Verde claro.001
+    second: {fileID: 2100000, guid: 1ba758fb6c53b1a49970d5f12a7405a0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wood Claro.003
+    second: {fileID: 2100000, guid: be28353410d150344b58b59f50512b6f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wood Escuro.002
+    second: {fileID: 2100000, guid: b20a679bf1bb91e42b14f1b486407f61, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: "Wood M\xE9dio 1.001"
+    second: {fileID: 2100000, guid: ded1ef67e2c94b24594d025715803d7b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: agua
+    second: {fileID: 2100000, guid: def64255663a4d441b56c73ff29f7c1b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: agua.001
+    second: {fileID: 2100000, guid: 6413bfda594db794aa8be29cc6e3f9a0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: amarelo da flor
+    second: {fileID: 2100000, guid: 1c9c2fbe194fe0e4a92f954bc18e269f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: avre marrom
+    second: {fileID: 2100000, guid: 2899b32d849584b4bae11865a37bb37d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: bandeira
+    second: {fileID: 2100000, guid: 950bf5e74a0c91041b8077056cc55cb4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: bomba
+    second: {fileID: 2100000, guid: bf8d4e4b50c74ed44afb43b90d27ce8e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: bomba dourada
+    second: {fileID: 2100000, guid: 40224acf55c098b41a186c0828f577e6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: "branco celeir\xF3"
+    second: {fileID: 2100000, guid: 2302fe85145704846b5662f7f9460fa0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: "chap\xE9u claro"
+    second: {fileID: 2100000, guid: 6ffad97de137e754dbe74534f3951a7e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: "chap\xE9u escuro"
+    second: {fileID: 2100000, guid: 4b438f8efa769ba42a1cc696c67de0f4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: chaupeu 2
+    second: {fileID: 2100000, guid: 3749d328b944c124f973c9e65257085a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: dirty
+    second: {fileID: 2100000, guid: 461e71c22300aff4798310d3760b0335, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: fOLHINHA
+    second: {fileID: 2100000, guid: 2e1f2890485b8ad4c8a20ed8feab56a5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: feno
+    second: {fileID: 2100000, guid: 543189f27f7f2bb4ab134b841ecbd969, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: feno escuro
+    second: {fileID: 2100000, guid: 8b4b535d3394f654a85c89a38f5af1dc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lARANJA
+    second: {fileID: 2100000, guid: c7e37a7ae1bc9fd40b628a6177d2a567, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: laranja cenoura.001
+    second: {fileID: 2100000, guid: b04b37dc73ffa4245bc4ad2a051e977c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: madeira da cuia
+    second: {fileID: 2100000, guid: 884329e52beeda2428ce325aacc4b2e2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mesa
+    second: {fileID: 2100000, guid: 31db4a4678583f841981753eee609dff, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: metal
+    second: {fileID: 2100000, guid: 5f20c82f3c3e74b43a849ed441593fe0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: metal.001
+    second: {fileID: 2100000, guid: 539b2462e05f16a4aacc0eba70eecfe4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: metal.002
+    second: {fileID: 2100000, guid: f6c2b227835a67c4f973b5a86c24647c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: "met\xE1lico"
+    second: {fileID: 2100000, guid: 70a86a91dad7dc04fa8a9005bdc96b81, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: "met\xE1lico escuro"
+    second: {fileID: 2100000, guid: d1d879019ff1a85468795af009e806a4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: "met\xE1lico mais escuro"
+    second: {fileID: 2100000, guid: d447b5fe25848ec4d9b53ab464901db0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pao  fora
+    second: {fileID: 2100000, guid: 5553d86dd9f99ce4c9446f6e9d98f2ed, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pao dentro
+    second: {fileID: 2100000, guid: cb46ae18b1bf8084895a8290989a9d92, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: parede branco
+    second: {fileID: 2100000, guid: f28373aa89873b34295aba1b755bc00f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pedra rubi bomba
+    second: {fileID: 2100000, guid: a7d3ff607350223419e6678c8e0e4ae3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: porta
+    second: {fileID: 2100000, guid: 22d4fe6ed99e2cc4e927f2bf257e94cf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: telhado
+    second: {fileID: 2100000, guid: ef637b9e720aefd4288127db41cb783a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: terra.001
+    second: {fileID: 2100000, guid: f852a8e2afca1ac4ca1457f70f9a7076, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: terrinha
+    second: {fileID: 2100000, guid: c2626725925e73445b9c41703e7aea84, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: trigo
+    second: {fileID: 2100000, guid: baf2013f6c699ab42b7a97ba58bb568d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: trigo graos
+    second: {fileID: 2100000, guid: ca5a2634d05a61745ae678d0703c0244, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: wall texture
+    second: {fileID: 2100000, guid: f917dd78ed95b504ab8a9e15fad701c1, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
