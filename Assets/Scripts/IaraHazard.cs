@@ -13,17 +13,43 @@ public class IaraHazard : MonoBehaviour
     [Tooltip("Volume da Vinheta")]
     public Volume iaraVignetteVolume;
 
+    [Header("Movimentação (Vai e Vem)")]
+    [Tooltip("Ativar movimento do objeto?")]
+    public bool seMove = true;
+    [Tooltip("Velocidade do movimento")]
+    public float velocidadeMovimento = 2f;
+    [Tooltip("Distância que o objeto percorre para frente e para trás")]
+    public float distanciaMovimento = 5f;
+
     private float tempoExposto = 0f;
     private bool playerNaArea = false;
     private FirstPersonCamera playerCam;
+    
+    // Variável para guardar a posição inicial do objeto no mundo
+    private Vector3 posicaoInicial; 
 
     void Start()
     {
         playerCam = Object.FindFirstObjectByType<FirstPersonCamera>();
+        
+        // Salva o ponto de partida do objeto assim que o jogo começa
+        posicaoInicial = transform.position; 
     }
 
     void Update()
     {
+        // 1. Lógica de Movimento
+        if (seMove)
+        {
+            // Mathf.Sin cria uma onda que vai de -1 a 1 ao longo do tempo.
+            // Multiplicamos pela distância desejada para definir o limite do vai e vem.
+            float deslocamento = Mathf.Sin(Time.time * velocidadeMovimento) * distanciaMovimento;
+            
+            // Movemos o objeto a partir da posição inicial
+            transform.position = posicaoInicial + (transform.right * deslocamento);
+        }
+
+        // 2. Lógica de Nausea / Game Over
         if (playerNaArea)
         {
             tempoExposto += Time.deltaTime;
@@ -87,7 +113,7 @@ public class IaraHazard : MonoBehaviour
 
         if (GameResetManager.Instance != null)
         {
-            GameResetManager.Instance.ResetGameProgress("Você foi hipnotizado pelo canto!");
+            GameResetManager.Instance.ResetGameProgress("Você foi hipnotizado pelo canto da Iara!");
         }
     }
 }

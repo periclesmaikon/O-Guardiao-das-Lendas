@@ -10,6 +10,7 @@ public class LegendQuizManager : MonoBehaviour
     public TextMeshProUGUI textoPergunta;
     public Button[] botoesResposta;
     private TextMeshProUGUI[] textosDosBotoes;
+    public GameObject miraCrosshair;
 
     [Header("Telas de Falha e Opções")]
     public GameObject painelErro;
@@ -241,11 +242,8 @@ public class LegendQuizManager : MonoBehaviour
 
     private void TentarCaminhoOuCreditos()
     {
-        if (painelErro != null && painelErro.activeSelf)
-        {
-            PlayerPrefs.SetInt("StatusQuiz_" + lendaAtual.nomeInsignia, 2);
-            PlayerPrefs.Save();
-        }
+        PlayerPrefs.SetInt("StatusQuiz_" + lendaAtual.nomeInsignia, 2);
+        PlayerPrefs.Save();
 
         if (JogoEstaFinalizado())
         {
@@ -298,9 +296,9 @@ public class LegendQuizManager : MonoBehaviour
         SceneManager.LoadScene(nomeCenaMenu);
     }
 
-    private bool JogoEstaFinalizado()
+   private bool JogoEstaFinalizado()
     {
-        return PlayerPrefs.GetInt("CaminhoAberto_Lago", 0) == 1 && 
+        return PlayerPrefs.GetInt("CaminhoAberto_Lago", 0) == 1 &&
                PlayerPrefs.GetInt("CaminhoAberto_Floresta", 0) == 1;
     }
 
@@ -316,8 +314,8 @@ public class LegendQuizManager : MonoBehaviour
         Cursor.lockState = pausar ? CursorLockMode.None : CursorLockMode.Locked;
         Time.timeScale = pausar ? 0f : 1f;
         if (playerMovementScript != null) playerMovementScript.enabled = !pausar;
+        if (miraCrosshair != null) miraCrosshair.SetActive(!pausar);
     }
-
     private void IrParaLago()
     {
         PlayerPrefs.SetInt("CaminhoAberto_Lago", 1);

@@ -51,6 +51,18 @@ public class LegendPuzzleManager : MonoBehaviour
         {
             ClearPuzzleSlots();
         }
+
+        // Finaliza animação de lenda salva
+        if (lendaSalvaUI != null)
+        {
+            lendaSalvaUI.SetActive(false);
+            
+            CanvasGroup cg = lendaSalvaUI.GetComponent<CanvasGroup>();
+            if (cg != null)
+            {
+                cg.alpha = 0f;
+            }
+        }
     }
 
     public void CheckPuzzleCompletion()

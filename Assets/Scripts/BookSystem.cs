@@ -78,6 +78,8 @@ public class BookSystem : MonoBehaviour
         }
         else
         {
+            if (painelLeitura != null) painelLeitura.SetActive(false);
+            
             if (uiBlurVolume != null) uiBlurVolume.weight = 0f;
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
